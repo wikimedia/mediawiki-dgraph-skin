@@ -26,6 +26,9 @@
  * QuickTemplate class for Dgraph skin
  * @ingroup Skins
  */
+use MediaWiki\ResourceLoader\SkinModule;
+use MediaWiki\MediaWikiServices;
+
 class DgraphTemplate extends BaseTemplate {
 	/* Functions */
 
@@ -94,11 +97,8 @@ class DgraphTemplate extends BaseTemplate {
 				array_reverse( $this->data['personal_urls'] );
 		}
 
-		$this->data['pageLanguage'] =
-			$this->getSkin()->getTitle()->getPageViewLanguage()->getHtmlCode();
-
 		// Output HTML Page
-		$logos = ResourceLoaderSkinModule::getAvailableLogos( $this->getSkin()->getConfig() );
+		$logos = SkinModule::getAvailableLogos( $this->getSkin()->getConfig() );
 		$wordmark = $logos['wordmark'] ?? [
 			"src" => "$assetsPath/assets/images/logo.svg",
 			"width" => 233,
@@ -268,7 +268,7 @@ class DgraphTemplate extends BaseTemplate {
 			// Loose comparison with '!=' is intentional, to catch null and false too, but not '0'
 			if ( $this->data['title'] != '' ) {
 			?>
-			<h1 id="firstHeading" class="firstHeading" lang="<?php $this->text( 'pageLanguage' ); ?>"><?php
+			<h1 id="firstHeading" class="firstHeading"><?php
 				 $this->html( 'title' )
 			?></h1>
 			<?php
@@ -519,7 +519,7 @@ class DgraphTemplate extends BaseTemplate {
 							echo $this->makeListItem( $key, $val );
 						}
 						if ( $hook !== null ) {
-							Hooks::run( $hook, array( &$this, true ) );
+							MediaWikiServices::getInstance()->getHookContainer()->run( $hook, array( &$this, true ) );
 						}
 						?>
 					</ul>

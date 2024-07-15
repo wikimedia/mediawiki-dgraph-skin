@@ -45,7 +45,7 @@
 	"@note": "When modifying skins.dgraph.styles definition, make sure the installer still works",
 	"ResourceModules": {
 		"skins.dgraph.styles": {
-			"class": "ResourceLoaderSkinModule",
+			"class": "MediaWiki\\ResourceLoader\\SkinModule",
 			"features": {
 				"interface-category": false
 			},
